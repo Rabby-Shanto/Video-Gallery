@@ -7,3 +7,15 @@ class CustomUser(AbstractUser):
 
     def __str__(self):
         return self.email
+
+
+
+class PlayList(models.Model):
+    title = models.CharField(max_length=250)
+
+
+class Video(models.Model):
+    title = models.CharField(max_length=250)
+    url = models.URLField()
+    youtube_id = models.CharField(max_length=100)
+    playlist = models.ForeignKey(PlayList,on_delete=models.CASCADE)
