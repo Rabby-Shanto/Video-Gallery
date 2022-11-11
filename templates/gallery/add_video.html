@@ -1,0 +1,27 @@
+{% extends 'account/base.html' %}
+{% load crispy_forms_filters %}
+{% block content %}
+
+<div class="container">
+    <h3>Add Video to your playlist</h3>
+    <form action="" method="post">
+        {% csrf_token %}
+        <div  class="mb-2">
+            {{ form|crispy }}
+        </div>
+        
+        <button type="submit" class="btn-primary form-control">Add Video</button>
+    </form>
+<br>
+<br>
+    <h1>OR</h1>
+
+    <form action="">
+        <div  class="mb-2">
+        {{search_form|crispy}}
+        </div>
+        <button type="submit" class="btn-danger form-control">search Video</button>
+    </form>
+</div>
+
+{% endblock %}
