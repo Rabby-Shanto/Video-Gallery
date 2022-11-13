@@ -7,6 +7,6 @@ urlpatterns = [
     path('details/<int:pk>',views.detail_view.as_view(),name="detail"),
     path('update/<int:pk>',views.update_playlist.as_view(),name="update"),
     path('delete/<int:pk>',views.delete_playlist.as_view(),name="delete"),
-
-    path('<int:pk>/addvideo',views.add_video,name="add_video")
+    path('<int:pk>/addvideo',views.add_video,name="add_video"),
+    path('video/search',views.search_video,name="search_video"),
 ]

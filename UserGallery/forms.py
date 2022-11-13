@@ -22,7 +22,7 @@ class SimpleSignupForm(SignupForm):
 class AddvideoForm(forms.ModelForm):
     class Meta:
         model = Video
-        fields = ['title','url','youtube_id']
+        fields = ['url']
 
 
 class SearchvideoForm(forms.ModelForm):

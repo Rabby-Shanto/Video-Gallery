@@ -15,9 +15,15 @@ class PlayList(models.Model):
     title = models.CharField(max_length=250)
     user = models.ForeignKey(CustomUser,on_delete=models.CASCADE)
 
+    def __str__(self):
+        return self.title
+
 
 class Video(models.Model):
     title = models.CharField(max_length=250)
     url = models.URLField()
     youtube_id = models.CharField(max_length=100)
     playlist = models.ForeignKey(PlayList,on_delete=models.CASCADE)
+
+    def __str__(self):
+        return self.playlist.title

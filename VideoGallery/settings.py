@@ -1,4 +1,8 @@
+
+import os
 from pathlib import Path
+from decouple import config
+from django.contrib.messages import constants as messages
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -14,6 +18,14 @@ SECRET_KEY = 'django-insecure-xn3n^zvi3!d1qvf6h2%+z&j$bz(gn5-6nqk9@vvzt6$p&+2ws8
 DEBUG = True
 
 ALLOWED_HOSTS = ['localhost']
+
+MESSAGE_TAGS = {
+        messages.DEBUG: 'alert-secondary',
+        messages.INFO: 'alert-info',
+        messages.SUCCESS: 'alert-success',
+        messages.WARNING: 'alert-warning',
+        messages.ERROR: 'alert-danger',
+ }
 
 
 # Application definition
@@ -130,3 +142,5 @@ ACCOUNT_FORMS = {'signup': 'UserGallery.forms.SimpleSignupForm'}
 
 LOGIN_REDIRECT_URL = 'u_gallery'
 ACCOUNT_LOGOUT_REDIRECT_URL ="/accounts/login"
+YOUTUBE_API_KEY = config('YOUTUBE_API_KEY')
+

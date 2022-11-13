@@ -1,9 +1,11 @@
 {% extends 'account/base.html' %}
 {% load crispy_forms_filters %}
+
 {% block content %}
 
 <div class="container">
-    <h3>Add Video to your playlist</h3>
+    
+    <h3>Add Video to {{playlist.title}}</h3>
     <form action="" method="post">
         {% csrf_token %}
         <div  class="mb-2">
@@ -11,6 +13,7 @@
         </div>
         
         <button type="submit" class="btn-primary form-control">Add Video</button>
+
     </form>
 <br>
 <br>
@@ -22,6 +25,31 @@
         </div>
         <button type="submit" class="btn-danger form-control">search Video</button>
     </form>
+
+    <div id="search_result">
+
+    </div>
+
+    <script>
+        var delayTimer;
+        $('#id_title').keyup(function(){
+            clearTimeout(delayTimer);
+            $('#search_result').text('Loading.....');
+            delayTimer = setTimeout(function(){
+                $.ajax({
+                    url : 'video/search',
+                    data : {
+                        'search_term' : 'hello',
+                    },
+                    dataType : 'json',
+                    success : function(data){
+                        $('#search_result').text('ok');
+                    },
+                });
+
+            }, 1000);
+        });
+    </script>
 </div>
 
 {% endblock %}
