@@ -25,7 +25,5 @@ class AddvideoForm(forms.ModelForm):
         fields = ['url']
 
 
-class SearchvideoForm(forms.ModelForm):
-    class Meta:
-        model = Video
-        fields = ['title']
+class SearchvideoForm(forms.Form):
+    search_term = forms.CharField(max_length=255, label="Search for videos")

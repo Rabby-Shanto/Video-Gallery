@@ -8,20 +8,40 @@ from .models import PlayList,Video
 from .forms import AddvideoForm,SearchvideoForm
 from django.contrib import messages
 import urllib
-from django.forms.utils import ErrorList
 import requests
 from django.conf import settings
 
 YOUTUBE_API_KEY = settings.YOUTUBE_API_KEY
 # https://youtube.googleapis.com/youtube/v3/search?part=snippet&relatedToVideoId=3QNBVG2yqKA&type=video&key=[YOUR_API_KEY]
 # https://youtube.googleapis.com/youtube/v3/videos?part=snippet&id=3QNBVG2yqKA&key=[YOUR_API_KEY]
-
+# https://youtube.googleapis.com/youtube/v3/search?part=snippet&q=eggs&key=[YOUR_API_KEY]
 
 # Create your views here.
-@login_required
-def u_gallery(request):
 
-        return render(request,'gallery/user_gallery.html')
+def video_search(request):
+    search_form = SearchvideoForm(request.GET)
+    if search_form.is_valid():
+        search = search_form.cleaned_data['search_term']
+        encoded_search_term = urllib.parse.quote(search)
+        response = requests.get(f'https://youtube.googleapis.com/youtube/v3/search?part=snippet&q={encoded_search_term}&key={YOUTUBE_API_KEY}')
+
+        return JsonResponse(response.json())
+
+    return JsonResponse({'Sorry':'Not Working'})
+
+
+@login_required
+def u_gallery(request):    
+    videos = Video.objects.get(playlist__user=request.user)
+    video_count = videos.count()
+    print(video_count)
+    context = {
+        'videos' : videos,
+        'video_count': video_count
+    }
+
+
+    return render(request,'gallery/user_gallery.html',context)
 
 
 @method_decorator(login_required, name='dispatch')
@@ -103,6 +123,11 @@ def add_video(request,pk):
         return render(request,'gallery/add_video.html',context)
 
 
+@method_decorator(login_required, name='dispatch')
+class delete_video(generic.DeleteView):
+    model = Video
+    template_name  = 'gallery/delete_video.html'
+    success_url = reverse_lazy('u_gallery')
 
-def search_video(request):
-    return JsonResponse({'hello' :'yes'})
+
+

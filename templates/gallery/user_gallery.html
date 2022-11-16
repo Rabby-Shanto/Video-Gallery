@@ -1,6 +1,36 @@
 {% extends 'account/base.html' %}
 
 {% block content %}
-<h1>successfully logged in</h1>
+<div class="text-center">
+    <h3>Welcome to {{user.username}}'s gallery</h3>
+</div>
+
+<div class="container">
+    <div class="row">
+        <div class="col">
+            <table class="table table-hover">
+                <thead>
+                  <tr>
+                    <th scope="col">playlist</th>
+                    <th scope="col">playlist name</th>
+                    <th scope="col">Number of Video's</th>
+                    <th scope="col">Watch playlist</th>
+                  </tr>
+                </thead>
+                <tbody>
+
+                    {% for video in videos %}
+                  <tr>
+                    <th scope="row">{{video.id}}</th>
+                    <td>{{video.playlist.title}}</td>
+                    <td>{{video_count}}</td>
+                    <td>@mdo</td>
+                  </tr>
+                  {% endfor %}
+                </tbody>
+              </table>
+        </div>
+    </div>
+</div>
 
 {% endblock %}
