@@ -31,13 +31,15 @@ def video_search(request):
 
 
 @login_required
-def u_gallery(request):    
-    videos = Video.objects.get(playlist__user=request.user)
-    video_count = videos.count()
-    print(video_count)
+def u_gallery(request):
+    playlists = PlayList.objects.filter(user=request.user)
+ 
+
+
     context = {
-        'videos' : videos,
-        'video_count': video_count
+
+        'playlists': playlists,
+
     }
 
 
@@ -56,10 +58,16 @@ class create_playlist(generic.CreateView):
         super(create_playlist,self).form_valid(form)
         return redirect('u_gallery')
 
-@method_decorator(login_required, name='dispatch')
+@method_decorator(login_required,name='dispatch')
 class detail_view(generic.DetailView):
         model = PlayList
         template_name = 'gallery/detail_playlist.html'
+        def get_context_data(self, **kwargs):
+
+            context = super().get_context_data(**kwargs)
+
+            context['videos'] = Video.objects.filter(playlist__user=self.request.user,playlist__id=self.kwargs.get('pk'))
+            return context
 
 
 @method_decorator(login_required, name='dispatch')

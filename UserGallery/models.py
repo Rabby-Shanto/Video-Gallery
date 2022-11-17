@@ -18,12 +18,17 @@ class PlayList(models.Model):
     def __str__(self):
         return self.title
 
+    def video_count(self):
+        video = Video.objects.filter(playlist=self,playlist__user=self.user).count()
+        return video
+
 
 class Video(models.Model):
     title = models.CharField(max_length=250)
     url = models.URLField()
     youtube_id = models.CharField(max_length=100)
     playlist = models.ForeignKey(PlayList,on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
 
     def __str__(self):
         return self.playlist.title
