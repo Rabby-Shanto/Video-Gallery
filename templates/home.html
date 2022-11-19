@@ -1,2 +1,25 @@
 {% extends 'account/base.html' %}
 
+
+
+{% block content%}
+
+
+<div class="container text-center bgi">
+    {% if not user.is_authenticated %}
+
+        <h2>Welcome to Video Playlist website</h2>
+        <h4>Create your own video playlist</h4>
+        <a href="{% url 'account_login' %}" class="btn btn-outline-dark">Get Started</a>
+
+    {% else %}
+
+    <h2>Welcome to {{user.username}}'s Video Gallery</h2>
+    <h4>Click here to check dashboard</h4>
+    <a href="{% url 'u_gallery' %}" class="btn btn-outline-dark">Get Started</a>
+
+    {% endif %}
+
+</div>
+
+{% endblock %}

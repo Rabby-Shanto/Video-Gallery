@@ -3,8 +3,18 @@
 {% block content %}
 <div class="text-center">
     <h3>Welcome to {{user.username}}'s gallery</h3>
+    {% if playlists %}
 
     <a href="{% url 'create_playlist' %}" class="btn btn-primary">Create Playlist</a>
+
+    {% else %}
+
+    <b>You don't have any playlist</b>
+    <br><br>
+    <a href="{% url 'create_playlist' %}" class="btn btn-primary">Create Playlist</a>
+
+
+    {% endif %}
 </div>
 <br>
 <br>

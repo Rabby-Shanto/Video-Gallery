@@ -7,11 +7,21 @@
         {% csrf_token %}
         <div  class="mb-2 text-center">
             <b>Playlist</b> : {{ playlist.title }}
+          <br>
+            <br>
+            {% if videos %}
+            <span><a href="{% url 'add_video' playlist.id %}" class="btn btn-danger">Add new video to playlist</a></span>
+            {% else %}
+            <b>You don't have any video in your playlist </b><br><br>
+            <span><a href="{% url 'add_video' playlist.id %}" class="btn btn-danger">Add new video to playlist</a></span>
+            {% endif %}
         </div>
 
-        {% for video in videos %}
+ <br><br>
 
         <div class="row">
+
+          {% for video in videos %}
             <div class="col-md-4 mt-2">
               <div class="card mb-3 shadow-sm">
                 <iframe
@@ -25,12 +35,14 @@
                 ></iframe>
                 <div class="card-body">
                   <p class="card-text">{{video.title}}</p>
+                  <span><a href="{% url 'delete_video' video.id %}" class="btn btn-danger">delete video</a></span>
                 </div>
               </div>
             </div>
+            {% endfor %}
           </div>
 
-        {% endfor %}
+
 
     </form>
 </div>
